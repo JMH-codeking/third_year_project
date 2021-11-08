@@ -44,7 +44,6 @@ class sleep_heart():
                     heart_average*(1+flow_variance),
                 )*0.9  # assume that people's heart rate during sleep is 0.9 times the normal
             )
-            print ("i")
         for i in range (light_sleep_period,rem_period):# here light and rem has a transition of deep sleep
             heartrate_list.append(
                 random.randint(
@@ -52,7 +51,6 @@ class sleep_heart():
                     heart_average*(1+flow_variance),
                 )*0.9*0.8  # assume that people's heart rate during deep sleep is 0.8 times light sleep
             )
-            print ("j")
         for i in range(rem_period,length): # rem sleep
             heartrate_list.append(
                 random.randint(
@@ -61,7 +59,6 @@ class sleep_heart():
                 )*0.9  # assume that people's heart rate during rem sleep is 0.9 times the normal random, 
                         #and may soar but not exceed normal
             )
-            print ("k")
         ''' here set the value of variance to +- 10% of possible average for normal
         '''
 
