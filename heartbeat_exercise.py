@@ -9,7 +9,6 @@ class exercise_heart():
         heartrate_list: List,
         time_day: int, 
         window: int,
-        flow_variance: float
     ):
         '''explanation of parameters
 
@@ -20,8 +19,8 @@ class exercise_heart():
         actual_time_second = 3600*24*time_day  # actual time in seconds
         length = int(actual_time_second/window)
         for i in range(0,length):
-            heartrate_list.append(random.randint(heart_average*0.9, heart_average*1.1))
-            ''' here set the value of variance to +- 10% of possible average
+            heartrate_list.append(random.randint(heart_average*1.2, heart_average*1.5))
+            ''' here set the value of variance to above 50% of possible average
             '''
 
         return (list(heartrate_list), length)
@@ -31,8 +30,8 @@ if __name__ == "__main__":
     heartrate_list = list() # create a list that is empty
     time_day = 0.1 # 2 days
     window = 4 # 4 seconds
-    normal_heart = normal_heart()
-    heartrate_normal, time_length = normal_heart.normal_heartbeat(
+    exercise_heart = exercise_heart()
+    heartrate_normal, time_length = exercise_heart.exercise_heartbeat(
         heart_average, 
         heartrate_list, 
         time_day, window
@@ -41,5 +40,5 @@ if __name__ == "__main__":
     plt.figure()
     plt.plot(time_x, heartrate_normal)
     plt.show()
-    plt.savefig('a.png')
+    plt.savefig('./final_output/exercise.png')
     #plt.plot(time_x, np.transpose(final))z
