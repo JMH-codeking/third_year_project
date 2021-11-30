@@ -1,8 +1,10 @@
 #! /usr/bin/python3
 import matplotlib.pyplot as plt
 from one_day_heartbeat import one_day
+import pathlib
 import os
 
+_parent = pathlib.Path(__file__).parent
 if __name__ == "__main__":
     one_day = one_day()
     days = 1
@@ -21,5 +23,5 @@ if __name__ == "__main__":
     time_x = [window*i for i in range(0,time_length)]
     plt.figure()
     plt.plot(time_x, heartrate_list)
-    os.system("rm ./final_output/*")
-    plt.savefig('./final_output/final_simulation.png')
+    os.system(f"rm {_parent}/final_output/*")
+    plt.savefig(f'{_parent}/final_output/final_simulation.png')
