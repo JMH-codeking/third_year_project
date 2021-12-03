@@ -6,10 +6,8 @@ import pathlib
 _parent = pathlib.Path(__file__).parent.parent
 dataset = np.loadtxt(str(_parent) + '/heartbeat.txt',dtype='float32')
 dataset = dataset.astype(np.float32)
-print (type(dataset[8]))
 max_value = np.max(dataset)
 min_value = np.min(dataset)
-
 scalar = max_value - min_value
 dataset = list(map(lambda x: x / scalar, dataset))
 
@@ -63,7 +61,7 @@ criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
 
 # 开始训练
-for e in range(1000):
+for e in range(50000):
     var_x = Variable(train_x)
     var_y = Variable(train_y)
     # 前向传播
@@ -73,5 +71,21 @@ for e in range(1000):
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
-    if (e + 1) % 100 == 0: # 每 100 次输出结果
+    if (e + 1) % 10 == 0: # 每 100 次输出结果
         print('Epoch: {}, Loss: {:.5f}'.format(e + 1, loss.item()))
+    
+model = model.eval() # 转换成测试模式
+
+data_X = data_X.reshape(-1, 1, 2)
+data_X = torch.from_numpy(data_X)
+var_data = Variable(data_X)
+pred_test = model(var_data) # 测试集的预测结果
+# 改变输出的格式
+pred_test = pred_test.view(-1).data.numpy()
+# 画出实际结果和预测的结果
+plt.plot(pred_test, 'g', label='prediction')
+plt.plot(dataset, 'b', label='real')
+plt.legend(loc='best')
+plt.title('The graph of prediction and real dataset')
+plt.show()
+plt.savefig(str(pathlib.Path(__file__).parent) + '/prediction.png')
