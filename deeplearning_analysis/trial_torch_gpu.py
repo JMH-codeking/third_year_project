@@ -13,6 +13,7 @@ min_value = np.min(dataset)
 scalar = max_value - min_value
 dataset = list(map(lambda x: x / scalar, dataset))
 dataset = dataset[0:100]
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def create_dataset(dataset, look_back=2):
     dataX, dataY = [], []
@@ -59,27 +60,26 @@ class lstm(nn.Module):
         return x
 
 model = lstm(2,4,1,2)
+model = model.to(device)
 
 criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
 
 # 开始训练
-for e in range(10):
+for e in range(10000):
     var_x = Variable(train_x)
     var_y = Variable(train_y)
+    var_x.to(device)
+    var_y.to(device)
     # 前向传播
     out = model(var_x)
     loss = criterion(out, var_y)
-    pred = out.argmax(dim=1)
-
-    num_correct = 1
-    num_correct = torch.eq(pred, var_y).sum()
     # 反向传播
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
-    if (e + 1) % 1 == 0: # 每 100 次输出结果
-        print('Epoch: {}, Loss: {:.5f}, Acc: {:.5f}'.format(e + 1, loss.item(),num_correct.item()))
+    if (e + 1) % 10 == 0: # 每 100 次输出结果
+        print('Epoch: {}, Loss: {:.5f}'.format(e + 1, loss.item()))
     
 model = model.eval() # 转换成测试模式
 
@@ -95,4 +95,4 @@ plt.plot(dataset, 'b', label='real')
 plt.legend(loc='best')
 plt.title('The graph of prediction and real dataset')
 plt.show()
-#plt.savefig(str(pathlib.Path(__file__).parent) + '/prediction.png')
+plt.savefig(str(pathlib.Path(__file__).parent) + '/prediction.png')
