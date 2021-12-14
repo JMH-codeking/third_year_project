@@ -4,15 +4,18 @@ import matplotlib.pyplot as plt
 import pathlib
 
 from torch._C import device
+import sys
+sys.path.append('../packetloss_simulation/')
+from packetloss_normal import normal_packetloss
 
 _parent = pathlib.Path(__file__).parent.parent
-dataset = np.loadtxt(str(_parent) + '/heartbeat_60s.txt',dtype='float32')
+dataset = np.loadtxt(str(_parent) + '/heartbeat.txt',dtype='float32')
 dataset = dataset.astype(np.float32)
 max_value = np.max(dataset)
 min_value = np.min(dataset)
 scalar = max_value - min_value
 dataset = list(map(lambda x: x / scalar, dataset))
-dataset = dataset[0:400]
+dataset = dataset[0:100]
 
 def create_dataset(dataset, look_back=2):
     dataX, dataY = [], []
@@ -48,12 +51,10 @@ class lstm(nn.Module):
     def __init__(self,input_size,hidden_size,output_size,num_layer):
         super(lstm,self).__init__()
         self.layer1 = nn.LSTM(input_size,hidden_size,num_layer)
-        self.dropout = nn.Dropout(0.5)
         self.layer2 = nn.Linear(hidden_size,output_size)
     
     def forward(self,x):
         x,_ = self.layer1(x)
-        x = self.dropout(x)
         s,b,h = x.size()
         x = x.view(s*b,h)
         x = self.layer2(x)
@@ -66,7 +67,7 @@ criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
 
 # 开始训练
-for e in range(50000):
+for e in range(10000):
     var_x = Variable(train_x)
     var_y = Variable(train_y)
     # 前向传播
@@ -81,7 +82,7 @@ for e in range(50000):
     loss.backward()
     optimizer.step()
     if (e + 1) % 1 == 0: # 每 100 次输出结果
-        print('Epoch: {}, Loss: {:.5f}, Acc: {:.4f}'.format(e + 1, loss.item(),num_correct.item()))
+        print('Epoch: {}, Loss: {:.5f}, Acc: {:.5f}'.format(e + 1, loss.item(),num_correct.item()))
     
 model = model.eval() # 转换成测试模式
 
@@ -97,4 +98,4 @@ plt.plot(dataset, 'b', label='real')
 plt.legend(loc='best')
 plt.title('The graph of prediction and real dataset')
 plt.show()
-plt.savefig(str(pathlib.Path(__file__).parent) + '/prediction.png')
+#plt.savefig(str(pathlib.Path(__file__).parent) + '/prediction.png')

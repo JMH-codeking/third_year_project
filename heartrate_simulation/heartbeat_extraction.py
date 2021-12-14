@@ -18,13 +18,13 @@ As Fs = 100, we take 2000 data from data_mat
 and count how many peak_data is contained
 '''
 
-with open ('heartbeat.txt','w') as _txt:
+with open ('heartbeat_60s.txt','w') as _txt:
     for j in range (0,29570,5):
         '''Fs = 100, 2957000 points in total
 
         So 29570 seconds, and take 5s interval
         '''
 
-        heartrate = len([peak for peak in  ecg_raw_data[100*j:100*(j+5)] if peak in ecg_peak])*12
+        heartrate = len([peak for peak in  ecg_raw_data[100*j:100*(j+60)] if peak in ecg_peak])
         print (f'heartrate is:{heartrate} and the time is {j}s')
         _txt.write(str(heartrate) + '\n')
