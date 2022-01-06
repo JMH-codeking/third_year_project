@@ -15,7 +15,7 @@ class normal_packetloss:
             if x < cumulative_probability:
                 break 
         return item 
-    def paceketloss_normal (
+    def packetloss_normal (
         self,
         original_data: int,
         loss_rate: List,
