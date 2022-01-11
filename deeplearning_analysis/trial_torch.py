@@ -12,7 +12,7 @@ max_value = np.max(dataset)
 min_value = np.min(dataset)
 scalar = max_value - min_value
 dataset = list(map(lambda x: x / scalar, dataset))
-dataset = dataset[0:400]
+dataset = dataset[0:600]
 
 def create_dataset(dataset, look_back=2):
     dataX, dataY = [], []

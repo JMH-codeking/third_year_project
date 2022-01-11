@@ -6,7 +6,7 @@ class normal_packetloss:
     def random_pick(
         self,
         some_list, 
-        probabilities
+        probabilities,
     ): 
         x = random.uniform(0,1) 
         cumulative_probability = 0.0 

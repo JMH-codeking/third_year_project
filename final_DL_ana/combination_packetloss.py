@@ -6,31 +6,33 @@ import sys
 sys.path.append('../')
 from packetloss_simulation.packetloss_normal import normal_packetloss
 
-normal_packetloss = normal_packetloss()
-x = np.arange(0,100,1,dtype = int)
-y = np.sin(x)
-plt.subplot(1,2,1)
-plt.plot(x,y)
-plt.xlabel('x',fontsize=20)
-plt.ylabel('y',fontsize=20)
-plt.title('original data',fontsize=20)
-final_list = list()
-for data in y:
-    data = normal_packetloss.packetloss_normal(
-            data, 
-            [0.001, 0.1],
-        )
-    final_list.append(data)
-import matplotlib.pyplot as plt
-print (final_list)
-plt.subplot(1,2,2)
-plt.plot(x,final_list)
-plt.xlabel('x',fontsize=20)
-plt.ylabel('y',fontsize=20)
-plt.title('missing data',fontsize=20)
-plt.show()
-while None in final_list:
-    final_list.remove(None)
+
+while __name__ == "__main__":
+    normal_packetloss = normal_packetloss()
+    x = np.arange(0,100,1,dtype = int)
+    y = np.sin(x)
+    plt.subplot(1,2,1)
+    plt.plot(x,y)
+    plt.xlabel('x',fontsize=20)
+    plt.ylabel('y',fontsize=20)
+    plt.title('original data',fontsize=20)
+    final_list = list()
+    for data in y:
+        data = normal_packetloss.packetloss_normal(
+                data, 
+                [0.001, 0.1],
+            )
+        final_list.append(data)
+    import matplotlib.pyplot as plt
+    print (final_list)
+    plt.subplot(1,2,2)
+    plt.plot(x,final_list)
+    plt.xlabel('x',fontsize=20)
+    plt.ylabel('y',fontsize=20)
+    plt.title('missing data',fontsize=20)
+    plt.show()
+    while None in final_list:
+        final_list.remove(None)
 
 '''
 _parent = pathlib.Path(__file__).parent.parent
