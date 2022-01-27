@@ -49,7 +49,7 @@ if __name__ == "__main__":
     plt.title('original data',fontsize=20)
     final_list = list()
     for data in y:
-        data = normal_packetloss.paceketloss_normal(
+        data = normal_packetloss.packetloss_normal(
                 data, 
                 [0.001, 0.1],
             )
