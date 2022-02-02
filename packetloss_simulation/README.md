@@ -12,6 +12,12 @@
 - Node failure (specifically energy depletion, packetloss increase 
   from anypoint to 100%)
 
+# Special simulation cases
+- As this three events are independent, so that we can set the three 
+  situations happening together
+- Special cases: when both link failure and normal congestion reasons happen
+  the packetloss_type of this datapoint would be a List
+
 # Simulation result
 - This simulation result is the combination of the three cases, with node failure
   is always the last event triggered.

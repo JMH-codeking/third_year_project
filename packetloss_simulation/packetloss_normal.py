@@ -1,7 +1,11 @@
+from os import link
 from typing import List
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+
+from config import data_packetloss_type
+
 class normal_packetloss:
     def random_pick(
         self,
@@ -15,10 +19,12 @@ class normal_packetloss:
             if x < cumulative_probability:
                 break 
         return item 
+
     def packetloss_normal (
         self,
         original_data: int,
         loss_rate: List,
+        link_fluc = False,
     ):
         scale = 10000
         start_prop  = loss_rate[0] * scale
@@ -36,12 +42,22 @@ class normal_packetloss:
         list_pos = [original_data, None]
         proportion = [1-possibility, possibility]
         original_data = self.random_pick(list_pos, proportion)
+        if (link_fluc):
+            original_data = data_packetloss_type(
+                original_data,
+                0, #link fluctuation
+            )
+        else:
+            original_data = data_packetloss_type(
+                original_data,
+                -1, #normal
+            )
         return original_data
 
 if __name__ == "__main__":
     normal_packetloss = normal_packetloss()
     x = np.arange(0,100,1,dtype = int)
-    y = np.sin(x)
+    y = x 
     plt.subplot(1,2,1)
     plt.plot(x,y)
     plt.xlabel('x',fontsize=20)
@@ -52,15 +68,22 @@ if __name__ == "__main__":
         data = normal_packetloss.packetloss_normal(
                 data, 
                 [0.001, 0.1],
+                # True,
             )
         final_list.append(data)
     import matplotlib.pyplot as plt
-    print (final_list)
-    plt.subplot(1,2,2)
-    plt.plot(x,final_list)
-    plt.xlabel('x',fontsize=20)
-    plt.ylabel('y',fontsize=20)
-    plt.title('missing data',fontsize=20)
-    plt.show()
-    while None in final_list:
-        final_list.remove(None)
+    len_None = len(
+        [x for x in final_list if x.original_data[0] == None]
+    ) / len(final_list)
+
+    print (len_None)
+
+
+    # plt.subplot(1,2,2)
+    # plt.plot(x,final_list)
+    # plt.xlabel('x',fontsize=20)
+    # plt.ylabel('y',fontsize=20)
+    # plt.title('missing data',fontsize=20)
+    # plt.show()
+    # while None in final_list:
+    #     final_list.remove(None)

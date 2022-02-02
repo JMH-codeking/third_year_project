@@ -1,21 +1,23 @@
-'''This function simulates a long-term trend that the sensor node is running out of battery
+'''This function simulates a long-term trend that the sensor node is 
+   running out of battery
 
 This would cause the long-term pavket loss to be slowly increasing, until totally
-unable to transmit packet. At this time sensor nodes can sense, but not producing packet transmitting
-Therefore the general trend for this kind of packetloss would be a increasing probability of packetloss
-until 100% loss of packet.
+unable to transmit packet. At this time sensor nodes can sense, but not producing 
+packet transmitting. Therefore the general trend for this kind of packetloss 
+would be a increasing probability of packetloss until 100% loss of packet.
 
 https://www.sciencedirect.com/topics/computer-science/sensor-node
 
 '''
 
 from packetloss_normal import normal_packetloss
+from config import data_packetloss_type
 
 from typing import List
-import random
 
 '''the principle for this function 
 
+Rate of packetloss increases from a value to 100% through a function.
 '''
 
 class packetlossTotalSim:
@@ -82,6 +84,13 @@ class packetlossTotalSim:
                 list_pos, 
                 proportion,
             )
+            '''change datatype to packetloss_type with type 1 (node failure)
+            '''
+            original_data = data_packetloss_type(
+                original_data,
+                1, #node failure
+            )
+
             final_result.append(original_data)
 
         return x,y_final,final_result
@@ -91,22 +100,23 @@ import matplotlib.pyplot as plt
 if __name__ == "__main__":
     packetlossTotalSim = packetlossTotalSim()
     input = [10] * 50000
-    x, y, final_result = packetlossTotalSim.final_simulation_packetloss(
+    x, y, final_result = packetlossTotalSim.node_failure_packetloss(
         input,
         0.001,
     )
-    plt.subplot(2,1,1)
-    plt.plot(x,final_result)
-    plt.title('final simulation result')
-    plt.xlabel('time / s')
-    plt.ylabel('IoT sensor value (assumed)')
+    print (final_result[1].packetloss_type)
+    # plt.subplot(2,1,1)
+    # plt.plot(x,final_result)
+    # plt.title('final simulation result')
+    # plt.xlabel('time / s')
+    # plt.ylabel('IoT sensor value (assumed)')
 
-    plt.subplot(2,1,2)
-    plt.plot(x,y)
-    plt.title('packet loss possibility change plot')
-    plt.xlim(0,1000)
-    plt.xlabel('time / s')
-    plt.ylabel('packet loss possibility')
-    plt.show()
+    # plt.subplot(2,1,2)
+    # plt.plot(x,y)
+    # plt.title('packet loss possibility change plot')
+    # plt.xlim(0,1000)
+    # plt.xlabel('time / s')
+    # plt.ylabel('packet loss possibility')
+    # plt.show()
 
 
