@@ -25,7 +25,7 @@ class normal_packetloss:
         original_data: int,
         loss_rate: List,
         link_fluc = False,
-    ):
+    )->data_packetloss_type:
         scale = 10000
         start_prop  = loss_rate[0] * scale
         end_prop  = loss_rate[1] * scale
@@ -70,13 +70,9 @@ if __name__ == "__main__":
                 [0.001, 0.1],
                 # True,
             )
-        final_list.append(data)
-    import matplotlib.pyplot as plt
-    len_None = len(
-        [x for x in final_list if x.original_data[0] == None]
-    ) / len(final_list)
+        final_list.append(data.original_data[0])
 
-    print (len_None)
+    print (final_list)
 
 
     # plt.subplot(1,2,2)

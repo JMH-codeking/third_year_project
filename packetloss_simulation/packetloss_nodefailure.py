@@ -30,7 +30,7 @@ class packetlossTotalSim:
             '''This input possibility should be 
             a float number
             '''
-
+        
         assert isinstance(input_data, List), \
             '''This input data should be an integer list
             '''
@@ -48,20 +48,26 @@ class packetlossTotalSim:
         '''
 
         import cmath
-        x = np.arange(0,len(input_data)).tolist()
+        import random
+
+        proportion = random.randint(2300, 2700)
+        x = np.arange(
+            possibility*proportion,
+            len(input_data)+possibility*proportion,
+            step=1).tolist()
         ########################
         '''exponential increase
+        y = [cmath.exp(_x/200)*possibility for _x in x]
         
         '''
 
-        y = [cmath.exp(_x/100)*possibility for _x in x]
         ########################
 
 
+        y = [_x/proportion for _x in x]
         ########################
         '''linear decay
 
-        y = [_x/1000 for _x in x]
         '''
 
         ########################
@@ -85,11 +91,13 @@ class packetlossTotalSim:
                 proportion,
             )
             '''change datatype to packetloss_type with type 1 (node failure)
-            '''
+            
             original_data = data_packetloss_type(
                 original_data,
                 1, #node failure
             )
+            '''
+
 
             final_result.append(original_data)
 
@@ -99,24 +107,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 if __name__ == "__main__":
     packetlossTotalSim = packetlossTotalSim()
-    input = [10] * 50000
+    input = [10] * 3000
     x, y, final_result = packetlossTotalSim.node_failure_packetloss(
         input,
         0.001,
     )
-    print (final_result[1].packetloss_type)
+    print (y)
     # plt.subplot(2,1,1)
     # plt.plot(x,final_result)
     # plt.title('final simulation result')
     # plt.xlabel('time / s')
     # plt.ylabel('IoT sensor value (assumed)')
 
-    # plt.subplot(2,1,2)
-    # plt.plot(x,y)
-    # plt.title('packet loss possibility change plot')
-    # plt.xlim(0,1000)
-    # plt.xlabel('time / s')
-    # plt.ylabel('packet loss possibility')
-    # plt.show()
+    plt.subplot(2,1,2)
+    plt.plot(x,y)
+    plt.title('packet loss possibility change plot')
+    plt.xlabel('time / s')
+    plt.ylabel('packet loss possibility')
+    plt.show()
 
 

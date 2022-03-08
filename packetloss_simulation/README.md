@@ -24,3 +24,9 @@
 - These three events happen independently, which means two may be triggered at 
   the same time
 
+# Packet loss rate analysis
+- This analysis mainly uses the lstm network into rate-analysis.
+- Basic idea of this analysis would be letting the information gate to capture the 
+  possible relationship between lost packets and the happening of battery failure
+  to predict a possible value of the future packet loss trend.
+

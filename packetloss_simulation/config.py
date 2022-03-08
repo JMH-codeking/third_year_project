@@ -8,7 +8,7 @@ class data_packetloss_type:
     def __init__(
         self,
         original_data: int,
-        packetloss_type: List,
+        packetloss_type: int,
     ):
         '''packetloss type: 0 -1 1
 
@@ -17,7 +17,7 @@ class data_packetloss_type:
 
         assert isinstance(
             packetloss_type,
-            List
+            int
         ), \
             '''Must be a List for the packetloss reason
             '''
