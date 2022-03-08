@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pathlib
 
-from torch._C import device
 
 _parent = pathlib.Path(__file__).parent.parent
 dataset = np.loadtxt(str(_parent) + '/heartbeat_60s.txt',dtype='float32')
@@ -13,8 +12,8 @@ min_value = np.min(dataset)
 scalar = max_value - min_value
 dataset = list(map(lambda x: x / scalar, dataset))
 dataset = dataset[0:600]
-
-def create_dataset(dataset, look_back=2):
+n = 10
+def create_dataset(dataset, look_back=n):
     dataX, dataY = [], []
     for i in range(len(dataset) - look_back):
         a = dataset[i:(i + look_back)]
@@ -34,9 +33,9 @@ test_X = data_X[train_size:]
 test_Y = data_Y[train_size:]
 
 import torch
-train_X = train_X.reshape(-1, 1, 2)
+train_X = train_X.reshape(-1, 1, n)
 train_Y = train_Y.reshape(-1, 1, 1)
-test_X = test_X.reshape(-1, 1, 2)
+test_X = test_X.reshape(-1, 1, n)
 
 train_x = torch.from_numpy(train_X)
 train_y = torch.from_numpy(train_Y)
@@ -60,7 +59,7 @@ class lstm(nn.Module):
         x = x.view(s,b,-1)
         return x
 
-model = lstm(2,4,1,2)
+model = lstm(n,4,1,3)
 
 criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
@@ -85,7 +84,7 @@ for e in range(50000):
     
 model = model.eval() # 转换成测试模式
 
-data_X = data_X.reshape(-1, 1, 2)
+data_X = data_X.reshape(-1, 1, n)
 data_X = torch.from_numpy(data_X)
 var_data = Variable(data_X)
 pred_test = model(var_data) # 测试集的预测结果
