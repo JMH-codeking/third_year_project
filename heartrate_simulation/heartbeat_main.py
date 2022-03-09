@@ -23,5 +23,5 @@ if __name__ == "__main__":
     time_x = [window*i for i in range(0,time_length)]
     plt.figure()
     plt.plot(time_x, heartrate_list)
-    os.system(f"rm {_parent}/final_output/*")
+    # os.system(f"rm {_parent}/final_output/*")
     plt.savefig(f'{_parent}/final_output/final_simulation.png')

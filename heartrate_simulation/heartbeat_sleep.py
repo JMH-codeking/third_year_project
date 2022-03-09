@@ -50,7 +50,7 @@ class sleep_heart():
                 random.randint(
                     heart_average*(1-flow_variance), 
                     heart_average*(1+flow_variance),
-                )*0.9*0.8  # assume that people's heart rate during deep sleep is 0.8 times light sleep
+                )*0.9*0.95  # assume that people's heart rate during deep sleep is 0.8 times light sleep
             )
         for i in range(rem_period,length): # rem sleep
             heartrate_list.append(
