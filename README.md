@@ -12,5 +12,5 @@
 - LSTM is used in this scenario, and the depletion would be detected before a 
   catastrophic value is reached
 
-`For further details of methodology, please see the files in 
-<heartrate_lossfilling> and <node_depletion_detection>`
+<big>***`For further details of methodology, please see the files in`
+`<heartrate_lossfilling> and <node_depletion_detection>`***</big>
