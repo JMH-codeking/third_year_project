@@ -15,5 +15,5 @@
  - magnifying one part of 5000 - 5500, a result is shown:
    ![](./final_output/heartrate_pred_mag.png)
  - error calculated by $error = |pred - real| \div real $
-   ![](./final_output/error_HR.png)
+   ![](./final_output/error.png)
    
