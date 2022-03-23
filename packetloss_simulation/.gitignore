@@ -2,4 +2,4 @@ datafile
 datafile_new
 lstm
 classification
-*.png
+__pycache__
