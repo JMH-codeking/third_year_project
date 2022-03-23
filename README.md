@@ -13,4 +13,4 @@
   catastrophic value is reached
 
 `For further details of methodology, please see the files in 
-heartrate_lossfilling and node_depletion_detection`
+<heartrate_lossfilling> and <node_depletion_detection>`
