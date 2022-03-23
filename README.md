@@ -1,17 +1,16 @@
-# heart rate simulation system 
+# Read this file before the actual project
 
-## This document introduces a way to build a secure and low-energy consuming system
+- <big>***Project outcome***</big>
+  - Heart rate data packet loss recovery
+  - Sensor node depletion detection
 
-- This algorthm mainly uses two well-trained lstm network for all data processing
-    -   Heart rate is a time-sequential event, and heart rate of the previous 
-        minute would highly affect the next minute, so that the DNN with memory
-        LSTM would be useful in heart rate regression, which means that the
-        prediction of future heart rate would be reliable, and can be treated as 
-        valuable data when packet loss occurs, filling the gap.
-        ![heart rate prediction using LSTM](./400_dropout_new.png)
+## Packet loss gap filling
+- LSTM is used as the algorithm, getting a heart rate curve fitting error of within
+  10%, so that the filling of packet loss would be within en error of 10%
 
-    -   For packet loss simulation, the simulation is basically the simulation 
-        of three randomly happening event. The proposed packet loss rate is also 
-        well regressed and predicted by the full-trained LSTM 
-        (can be predicted in advance)
-        ![packet loss rate prediction](./predictVsOriginalLossRate.png)
+## Sensor node depletion detection
+- LSTM is used in this scenario, and the depletion would be detected before a 
+  catastrophic value is reached
+
+`For further details of methodology, please see the files in 
+heartrate_lossfilling and node_depletion_detection`
