@@ -1,4 +1,5 @@
 
+from random import choice
 from sympy import deg
 import packetloss_nodefailure
 import packetloss_normal
@@ -77,12 +78,22 @@ class final_simulation_packetloss:
           )
 
           normal_packet = normal_packet.original_data[0]
+          
+          scale = 10000
+          start_prop  = 0.01 * scale
+          end_prop  = 0.02 * scale
 
-          normal_packet = normal.packetloss_normal(
-            normal_packet,
-            [0.0005, 0.005], # assume five times of packetloss rate than normal
-            True # trigger link failure
-          )
+          possibility = random.randint(start_prop, end_prop) / scale
+
+          list_pos = [0, 1]
+          proportion = [1-possibility, possibility]
+          choice = self.random_pick(list_pos, proportion)
+          if (choice):
+            normal_packet = normal.packetloss_normal(
+              normal_packet,
+              [0.05, 0.1], # assume five times of packetloss rate than normal
+              True # trigger link failure
+            )
 
           final_simulation_result.append(normal_packet.original_data[0])
           

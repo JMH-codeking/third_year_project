@@ -58,16 +58,9 @@ class packetlossTotalSim:
         ########################
         '''exponential increase
         y = [cmath.exp(_x/200)*possibility for _x in x]
-        
         '''
-
-        ########################
-
-
-        y = [_x/proportion for _x in x]
-        ########################
         '''linear decay
-
+        y = [_x/proportion for _x in x]
         '''
 
         ########################

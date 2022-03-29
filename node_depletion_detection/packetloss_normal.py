@@ -1,3 +1,4 @@
+from cmath import sin
 from os import link
 from typing import List
 import random
@@ -57,11 +58,12 @@ class normal_packetloss:
 if __name__ == "__main__":
     normal_packetloss = normal_packetloss()
     x = np.arange(0,100,1,dtype = int)
-    y = x 
+    y = np.sin(x)
     plt.subplot(1,2,1)
     plt.plot(x,y)
-    plt.xlabel('x',fontsize=20)
-    plt.ylabel('y',fontsize=20)
+    plt.xlabel('time',fontsize=20)
+    plt.ylabel('sensor value',fontsize=20)
+    plt.xticks([])
     plt.title('original data',fontsize=20)
     final_list = list()
     for data in y:
@@ -75,11 +77,13 @@ if __name__ == "__main__":
     print (final_list)
 
 
-    # plt.subplot(1,2,2)
-    # plt.plot(x,final_list)
-    # plt.xlabel('x',fontsize=20)
-    # plt.ylabel('y',fontsize=20)
-    # plt.title('missing data',fontsize=20)
-    # plt.show()
+    plt.subplot(1,2,2)
+    plt.plot(x,final_list)
+    plt.xlabel('time',fontsize=20)
+    plt.ylabel('sensor value',fontsize=20)
+    plt.title('missing data',fontsize=20)
+    plt.xticks([])
+    plt.show()
+    plt.savefig('./packetloss_simulation_result.png', dpi=300)
     # while None in final_list:
     #     final_list.remove(None)
